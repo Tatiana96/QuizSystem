@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">QuizSystem</string>
+    <string name="sign_up"><u>Sign up</u></string>
+    <string name="title_activity_main2">MainAction2</string>
+    <string name="title_activity_main3">QuizSystem</string>
+
+    <string name="mainLogin">Login</string>
+    <string name="mainPass">Password</string>
+    <string name="mainForget">Forget your password?</string>
+    <string name="mainSignIn">SIGN IN</string>
+    <string name="mainSignUp">SIGN UP</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="mainAct3PersInfo">Personal information</string>
+    <string name="mainAct3Email">Email</string>
+    <string name="mainAct3Login">Login</string>
+    <string name="mainAct3FirstName">First Name</string>
+    <string name="mainAct3SecondName">Second Name</string>
+    <string name="mainAct3Balance">Balance:   </string>
+    <string name="mainAct3BalanceSum">...</string>
+    <string name="mainAct3EmailTV">Email:</string>
+    <string name="mainAct3LoginTV">Login:</string>
+    <string name="mainAct3FirstNameTV">First name:</string>
+    <string name="mainAct3SecondNameTV">Second name:</string>
+    <string name="mainAct3BalanceTV">Balance:</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string-array name="TestList">
+        <item>Тест по программированию</item>
+        <item>Тест по географии</item>
+        <item>Тест по нотной грамоте</item>
+        <item>Тест по оргфографии</item>
+    </string-array>
+    <string name="title_activity_main5">QuizSystem</string>
+    <string name="title_activity_main4">MainActivity4</string>
+</resources>

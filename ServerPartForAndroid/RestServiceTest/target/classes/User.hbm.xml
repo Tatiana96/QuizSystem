@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="hello.entity.User" table="user" catalog="quizsystem">
+        <id name="userid" type="java.lang.Integer">
+            <column name="iduser" />
+            <generator class="identity" />
+        </id>
+        <property name="isadmin" type="java.lang.Integer">
+            <column name="isAdmin" length="11" not-null="true" unique="false" />
+        </property>
+        <property name="login" type="string">
+            <column name="login" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="firstname" type="string">
+            <column name="firstName" length="45" not-null="false" unique="false" />
+        </property>
+        <property name="secondname" type="string">
+            <column name="secondName" length="45" not-null="false" unique="false" />
+        </property>
+        <property name="email" type="string">
+            <column name="Email" length="45" not-null="false" unique="false" />
+        </property>
+        <property name="balance" type="double">
+            <column name="balance" length="30" not-null="true" unique="false" />
+        </property>
+        <property name="sex" type="java.lang.Integer">
+            <column name="sex" length="1" not-null="true" unique="false" />
+        </property>
+    </class>
+</hibernate-mapping>

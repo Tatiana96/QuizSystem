@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.tatiana.firsttest.MainActivity"
+    android:background="#fffafafa">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextLogin"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="175dp"
+        android:hint="@string/mainLogin" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextPass"
+        android:layout_centerVertical="true"
+        android:hint="@string/mainPass"
+        android:layout_alignLeft="@+id/editTextLogin"
+        android:layout_alignStart="@+id/editTextLogin"
+        android:layout_alignRight="@+id/editTextLogin"
+        android:layout_alignEnd="@+id/editTextLogin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/mainForget"
+        android:id="@+id/textViewForget"
+        android:layout_below="@+id/editTextPass"
+        android:layout_alignRight="@+id/editTextPass"
+        android:layout_alignEnd="@+id/editTextPass"
+        android:clickable="true"
+        android:linksClickable="true"
+        android:enabled="true"
+        android:textColorHighlight="#0ac354" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mainSignIn"
+        android:id="@+id/buttonSignIn"
+        android:layout_marginTop="25dp"
+        android:enabled="true"
+        android:layout_below="@+id/textViewForget"
+        android:layout_alignLeft="@+id/editTextPass"
+        android:layout_alignStart="@+id/editTextPass"
+        android:layout_alignRight="@+id/textViewForget"
+        android:layout_alignEnd="@+id/textViewForget"
+        android:clickable="true"
+        android:textSize="18dp"
+        android:singleLine="false"
+        android:focusable="false"
+        android:elegantTextHeight="false"
+        android:background="@color/BtnSignIn"
+        android:textColor="@color/BtnSignInText" />
+
+    <ImageView
+        android:src="@drawable/owl"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView"
+        android:adjustViewBounds="false"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mainSignUp"
+        android:id="@+id/buttonSignUp"
+        android:enabled="true"
+        android:clickable="true"
+        android:textSize="18dp"
+        android:singleLine="false"
+        android:focusable="false"
+        android:elegantTextHeight="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="29dp"
+        android:layout_alignLeft="@+id/buttonSignIn"
+        android:layout_alignStart="@+id/buttonSignIn"
+        android:layout_alignRight="@+id/buttonSignIn"
+        android:layout_alignEnd="@+id/buttonSignIn"
+        android:textColor="@color/BtnSignUpText"
+        android:background="@null"
+        android:allowUndo="false" />
+
+</RelativeLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0ba816</color> <!-- цвет шапочки приложения -->
+    <color name="colorPrimaryDark">#000000</color> <!-- цвет шторки уведомлений -->
+    <color name="colorAccent">#fd21e258</color>
+
+    <color name="BtnSignInPushed">#04710b</color>
+    <color name="BtnSignIn">#0ba816</color>
+    <color name="BtnSignInText">#fafafa</color>
+
+    <color name="BtnSignUpPushed">#0ba816</color>
+    <color name="BtnSignUpTextPushed">#fafafa</color>
+    <color name="BtnSignUpText">#02904e</color>
+    <color name="BtnSignUp">#00000000</color>
+
+    <color name="tvFoget">#80000000</color>
+    <color name="tvFogetPushed">#04710b</color>
+
+    <color name="colorPencil">#00000000</color>
+    <color name="colorPencilPushed">#0ba816</color>
+
+    <color name="tvUser">#ab000000</color>
+
+
+</resources>
