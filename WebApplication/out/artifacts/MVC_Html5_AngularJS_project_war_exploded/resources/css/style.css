@@ -1,0 +1,30 @@
+.container{
+	max-width: 960px;
+}
+.row.body{
+	margin-left: 0px; 
+}
+.page-body > h1{
+	text-align-last: center;
+	margin-top: 0px;
+}
+#form > input, form > input , form > select{
+	padding: 5px;
+	margin: 5px;
+}
+h1{
+	text-align: center;
+}
+
+.txt{
+	font: bold 125% seri
+}
+.param{
+	margin:10px
+}
+#form{
+	text-align: center;
+}
+.body > .col-md-4, .body > .col-xs-4{
+	padding:0
+}
