@@ -8,40 +8,32 @@ import java.sql.Statement;
 public class proposeQuestionService {
 
     public static String setProposeQuestion(String test, String login ,String typeQuestion, String contentQuestion){
-    //INSERT INTO `quizsystem`.`proposed_question` (`idTests`, `idUsers`, `type_question`, `questionContent`, `status`) VALUES ('2', '2', 'text', 'dfgdfhdh', 'in processing\'');
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
             myStmt.executeUpdate("INSERT INTO `quizsystem`.`proposed_question` (`idTests`, `idUsers`, `type_question`, `questionContent`, `status`) " +
-                    "VALUES ((Select idtest from quizsystem.test where name='"+test+"')," +
-                    " (Select iduser from quizsystem.user where login='"+login+"')," +
+                    "VALUES ((Select idTest from quizsystem.test where name='"+test+"')," +
+                    " (Select idUser from quizsystem.user where login='"+login+"')," +
                     " '"+typeQuestion+"', '"+contentQuestion+"', 'in processing')");
-
-            //select max(idproposed_question) from quizsystem.proposed_question where login='';
-
-            ResultSet myRs = myStmt.executeQuery("select max(idproposed_question)id from quizsystem.proposed_question where idUsers=(Select iduser from quizsystem.user where login='"+login+"')");
+            ResultSet myRs = myStmt.executeQuery("select max(idProposedQuestion)id from quizsystem.proposed_question where idUsers=(Select idUser from quizsystem.user where login='"+login+"')");
             if(myRs.next()) return myRs.getString("id");
         }catch(Exception exc){
             exc.printStackTrace();
         }
         return null;
-
     }
 
     public static void setProposeAnswer(String idQ,String answer){
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-
-            myStmt.executeUpdate("INSERT INTO `quizsystem`.`proposed_answer` (`idQuestion`, `correctly`, `answerContent`) VALUES ('"+idQ+"', '0', '"+answer+"')");
-
+            myStmt.executeUpdate("INSERT INTO `quizsystem`.`proposed_answer` (`idQuestion`, `correctly`, `content`) VALUES ('"+idQ+"', '0', '"+answer+"')");
         }catch(Exception exc){
             exc.printStackTrace();
         }
     }
 
     public static boolean setCorrectProposeAnswer(String idQ,String answer){
-
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
@@ -50,17 +42,14 @@ public class proposeQuestionService {
             while(myRs.next()){
                 String Content = myRs.getString("answerContent").toLowerCase();
                 if(Content.equalsIgnoreCase(answer)){
-                    myStmt.executeUpdate("UPDATE `quizsystem`.`proposed_answer` SET `correctly`='1' WHERE `idproposed_answer`='"+myRs.getString("idproposed_answer")+"';");
+                    myStmt.executeUpdate("UPDATE `quizsystem`.`proposed_answer` SET `correctly`='1' WHERE `idProposedAnswer`='"+myRs.getString("idProposedAnswer")+"';");
                     return true;
                 }
-
             }
             return false;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
-
         return false;
     }
 
@@ -68,50 +57,40 @@ public class proposeQuestionService {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-            ResultSet myRs = myStmt.executeQuery("Select * from quizsystem.proposed_question");
+            ResultSet myRs = myStmt.executeQuery("Select *, count(*) count from quizsystem.proposed_question");
 
-            int i=0;
-            while(myRs.next()) i++;
+            if(myRs.next()) {
+                UserQuestion question[] = new UserQuestion[myRs.getInt("count")];
+                int i = 0;
+                while (myRs.next()) {
+                    UserQuestion q = new UserQuestion(myRs.getString("content"), myRs.getString("typeQuestion"), GetAnswers(myRs.getString("idProposedQuestion")), GetCorrectAnswers(myRs.getString("idProposedQuestion")), myRs.getString("idProposedQuestion"));
 
-            UserQuestion question[] = new UserQuestion[i];
-
-            myRs = myStmt.executeQuery("Select * from quizsystem.proposed_question");
-            i=0;
-            while(myRs.next()){
-                UserQuestion q = new UserQuestion(myRs.getString("questionContent"), myRs.getString("type_question"), GetAnswers(myRs.getString("idproposed_question")),GetCorrectAnswers(myRs.getString("idproposed_question")), myRs.getString("idproposed_question"));
-
-                question[i] = q;
-                i++;
+                    question[i] = q;
+                    i++;
+                }
+                return question;
             }
-            return question;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
-
         return null;
     }
 
     public static String[] GetAnswers(String idQuestion){
-
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
             ResultSet myRs = myStmt.executeQuery("Select * from quizsystem.proposed_answer where idQuestion = "+idQuestion);
-
             int i=0;
             while(myRs.next()) i++;
-
             String answers[] = new String[i];
-
             myRs = myStmt.executeQuery("Select * from quizsystem.proposed_answer where idQuestion = "+idQuestion);
             i=0;
             while(myRs.next()){
-                answers[i] = myRs.getString("answerContent");
+                answers[i] = myRs.getString("content");
                 i++;
             }
             return answers;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -119,25 +98,19 @@ public class proposeQuestionService {
     }
 
     public static String[] GetCorrectAnswers(String idQuestion){
-
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-            ResultSet myRs = myStmt.executeQuery("Select * from quizsystem.proposed_answer where idQuestion ="+idQuestion+" and correctly = 1");
-
-            int i=0;
-            while(myRs.next()) i++;
-
-            String answers[] = new String[i];
-
-            myRs = myStmt.executeQuery("Select * from quizsystem.proposed_answer where idQuestion ="+idQuestion+" and correctly = 1");
-            i=0;
-            while(myRs.next()){
-                answers[i] = myRs.getString("answerContent");
-                i++;
+            ResultSet myRs = myStmt.executeQuery("Select *, count(*) count from quizsystem.proposed_answer where idQuestion ="+idQuestion+" and correctly = 1");
+            if(myRs.next()) {
+                String answers[] = new String[myRs.getInt("count")];
+                int i = 0;
+                while (myRs.next()) {
+                    answers[i] = myRs.getString("content");
+                    i++;
+                }
+                return answers;
             }
-            return answers;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -145,7 +118,6 @@ public class proposeQuestionService {
     }
 
     public static void DeleteQuestion(String id){
-
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
@@ -206,7 +178,6 @@ public class proposeQuestionService {
                         break;
                     }
                 }
-                //если такого ответа еще не было
                 if(!flag){
 
                     myStmt.executeUpdate(" INSERT INTO `quizsystem`.`answer` (`answerContent`) VALUES ('"+newAnsw[k]+"')");
@@ -216,12 +187,10 @@ public class proposeQuestionService {
                     if(myRs.next()) idAnswer = myRs.getString("id");//айдишник нового вопроса
                     myStmt.executeUpdate("INSERT INTO `quizsystem`.`question-answer` (`idAnswer`, `idQuestion`, `correctly`) " +
                             "VALUES ('"+idAnswer+"', '"+idQuestion+"', '"+correct[k]+"')");
-
                 }
                 myStmt.executeUpdate("DELETE FROM `quizsystem`.`proposed_answer` WHERE answerContent='"+newAnsw[k]+"'");
                 flag = false;
             }
-
         }catch(Exception exc){
             exc.printStackTrace();
         }

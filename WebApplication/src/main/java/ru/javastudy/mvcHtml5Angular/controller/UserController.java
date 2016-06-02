@@ -2,24 +2,19 @@ package ru.javastudy.mvcHtml5Angular.controller;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.javastudy.mvcHtml5Angular.model.Transaction;
-import ru.javastudy.mvcHtml5Angular.service.EditService;
-import ru.javastudy.mvcHtml5Angular.service.TransactionService;
-import ru.javastudy.mvcHtml5Angular.service.UserService;
+import ru.javastudy.mvcHtml5Angular.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @SessionAttributes(value = "userJSP")
 public class UserController {
+
     @RequestMapping(value = "/transaction", method = RequestMethod.GET)
-    public @ResponseBody
-    ModelAndView transaction(HttpServletRequest req) {
+    public @ResponseBody ModelAndView transaction(HttpServletRequest req) {
         ModelAndView model = new ModelAndView("transaction");
         Transaction[]tr;
         tr = TransactionService.GetTransactions(req.getSession().getAttribute("login").toString());
@@ -28,8 +23,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit/dataEdit", method = RequestMethod.POST)
-    public @ResponseBody
-    String dataEdit(HttpServletRequest req){
+    public @ResponseBody String dataEdit(HttpServletRequest req){
         try {
             JSONObject json = new JSONObject();
             String login = req.getSession().getAttribute("login").toString();
@@ -56,12 +50,9 @@ public class UserController {
     @RequestMapping(value = "/statistica", method = RequestMethod.GET)
     public @ResponseBody ModelAndView statictica(HttpServletRequest req) {
         ModelAndView model = new ModelAndView("statistica");
-
         model.addObject("bestAnswers", UserService.GetBestAnswer(req.getSession().getAttribute("login").toString()));
         model.addObject("badAnswers", UserService.GetBadAnswer(req.getSession().getAttribute("login").toString()));
 
         return model;
     }
-
-
 }

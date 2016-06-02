@@ -26,6 +26,10 @@
                 <%@ include file='/resources/partials/adminMenu.jsp'%>
             </div>
 
+            <div class="list-group">
+                <%@ include file='/resources/partials/TopUsers.jsp'%>
+            </div>
+
         </div>
 
         <div class="page-body col-md-8 col-xs-8">

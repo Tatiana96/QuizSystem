@@ -9,17 +9,16 @@ public class TestService {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-            ResultSet myRs = myStmt.executeQuery("Select idtest from quizsystem.test where name ='"+name+"'");
+            ResultSet myRs = myStmt.executeQuery("Select idTest from quizsystem.test where name ='"+name+"'");
             if(myRs.next()) {
                 String id = myRs.getString("idtest");
-                myStmt.executeUpdate("INSERT INTO `quizsystem`.`comment` (`idtest`, `content`) " +
+                myStmt.executeUpdate("INSERT INTO `quizsystem`.`comment` (`idTest`, `content`) " +
                         "VALUES ('"+id+"', '"+content+"')");
                 driver.unconnect();
             }
         }catch(Exception exc){
             exc.printStackTrace();
         }
-
     }
 
     public static String[] GetComments(String name){
@@ -27,21 +26,19 @@ public class TestService {
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
 
-            ResultSet myRs = myStmt.executeQuery("SELECT * FROM quizsystem.comment where idtest = (Select idtest from quizsystem.test where name ='"+name+"')");
+            ResultSet myRs = myStmt.executeQuery("SELECT * FROM quizsystem.comment where idTest = (Select idTest from quizsystem.test where name ='"+name+"')");
             int i=0;
             while(myRs.next())	i++;
 
             String comm[] = new String[i];
 
             i=0;
-            myRs = myStmt.executeQuery("SELECT * FROM quizsystem.comment where idtest = (Select idtest from quizsystem.test where name ='"+name+"')");
+            myRs = myStmt.executeQuery("SELECT * FROM quizsystem.comment where idTest = (Select idTest from quizsystem.test where name ='"+name+"')");
             while(myRs.next()){
-                System.out.println(myRs.getString("content"));
                 comm[i] = myRs.getString("content");
                 i++;
             }
             return comm;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -52,15 +49,12 @@ public class TestService {
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
             ResultSet myRs = myStmt.executeQuery("SELECT * FROM quizsystem.сategory");
-
             int i=0;
             while(myRs.next())	i++;
             String cat[] = new String[i];
-
             i=0;
             myRs = myStmt.executeQuery("SELECT * FROM quizsystem.сategory");
             while(myRs.next()){
-
                 cat[i] = myRs.getString("name");
                 i++;
             }
@@ -76,7 +70,7 @@ public class TestService {
             Statement myStmt = driver.connect();
 
             ResultSet myRs1;
-            if(category !=null) myRs1= myStmt.executeQuery("SELECT * FROM quizsystem.test where idCategory = (SELECT idСategory from quizsystem.сategory where name ='"+category+"')");
+            if(category !=null) myRs1= myStmt.executeQuery("SELECT * FROM quizsystem.test where idCategory = (SELECT idCategory from quizsystem.сategory where name ='"+category+"')");
             else myRs1= myStmt.executeQuery("SELECT * FROM quizsystem.test");
 
             if(myRs1.next()){
@@ -97,10 +91,8 @@ public class TestService {
                     cat[i] = myRs.getString("name");
                     i++;
                 }
-
                 return cat;
             }
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -111,10 +103,8 @@ public class TestService {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-
             ResultSet myRs = myStmt.executeQuery("SELECT * FROM quizsystem.test where name = '"+nameTest+"'");
             if(myRs.next())	return myRs.getString(parameter);
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -163,11 +153,9 @@ public class TestService {
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();//getDateTime
             myStmt.executeUpdate("UPDATE `quizsystem`.`testing` SET `finishTime`='"+OtherService.getDateTime()+"', `result`='"+UserResult+"' WHERE `idtesting`='"+idTesting+"';");
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
-
     }
 
     public static boolean addCategory(String newCat){

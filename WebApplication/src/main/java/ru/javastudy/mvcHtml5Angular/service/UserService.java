@@ -6,25 +6,19 @@ import java.sql.Statement;
 public class UserService {
 
     public static String[] GetTop(){
-
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-            ResultSet myRs = myStmt.executeQuery("SELECT * FROM quizsystem.top order by answers Desc");
-
+            ResultSet myRs = myStmt.executeQuery("SELECT *, count(*) count FROM quizsystem.top order by answers Desc");
             int i=0;
-            while(myRs.next()) i++;
-
-            String users[] = new String[i];
-
-            myRs = myStmt.executeQuery("SELECT * FROM quizsystem.top order by answers Desc");
-            i=0;
-            while(myRs.next()){
-                users[i] = myRs.getString("login");
-                i++;
+            if(myRs.next()) {
+                String users[] = new String[myRs.getInt("count")];
+               do{
+                    users[i] = myRs.getString("login");
+                    i++;
+               } while (myRs.next());
+                return users;
             }
-            return users;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -36,7 +30,6 @@ public class UserService {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-
             ResultSet myRs = myStmt.executeQuery("SELECT * FROM quizsystem.user where login = '"+login+"'");
             if(myRs.next())	return myRs.getString(parameter);
 
@@ -50,7 +43,6 @@ public class UserService {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-
             ResultSet myRs = myStmt.executeQuery("SELECT count(*) itog FROM quizsystem.user_response where iduser = (select iduser from quizsystem.user where login = '"+login+"') and correctness = 1");
             if(myRs.next()){
                 return myRs.getString("itog");
@@ -61,11 +53,9 @@ public class UserService {
         return null;
     }
     public static String GetBadAnswer(String login){
-
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-
             ResultSet myRs = myStmt.executeQuery("SELECT count(*) itog FROM quizsystem.user_response where iduser = (select iduser from quizsystem.user where login = '"+login+"')and correctness = 0");
             if(myRs.next()){
                 return myRs.getString("itog");
@@ -80,7 +70,6 @@ public class UserService {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-
             ResultSet myRs = myStmt.executeQuery("SELECT count(*) itog FROM quizsystem.user_response where idTesting = "+idTesting+" and idUser = (select idUser from quizsystem.user where login = '"+login+"') and correctness = 1");
             if(myRs.next()){
                 return myRs.getString("itog");

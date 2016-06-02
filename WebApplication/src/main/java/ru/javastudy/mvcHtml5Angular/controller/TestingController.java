@@ -2,14 +2,10 @@ package ru.javastudy.mvcHtml5Angular.controller;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.javastudy.mvcHtml5Angular.model.Question;
 import ru.javastudy.mvcHtml5Angular.service.*;
-
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -20,14 +16,11 @@ public class TestingController {
     public @ResponseBody ModelAndView test(HttpServletRequest req)throws java.io.IOException {
 
         ModelAndView model = new ModelAndView("test");
-
         String name = OtherService.decodeGetParameter(req.getParameter("nameTest").toString());
         model.addObject("nameTest", name);
         model.addObject("category", OtherService.decodeGetParameter(req.getParameter("category").toString()));
         model.addObject("cost", TestService.GetAboutTest(name, "cost"));
         model.addObject("about", TestService.GetAboutTest(name, "about"));
-        model.addObject("total", TestService.GetAboutTest(name, "total"));
-        model.addObject("best", TestService.GetAboutTest(name, "best"));
 
         String comment[] = TestService.GetComments(name);
         model.addObject("comments", comment);
@@ -74,7 +67,6 @@ public class TestingController {
         for(int i=0; i< Integer.parseInt(req.getParameter("size")); i++){
             String id = OtherService.decodeGetParameter(req.getParameter("question["+i+"][id]").toString());
             String answer =  req.getParameter("question["+i+"][answer]").toString();
-            String nameTest = req.getParameter("nameTest").toString();
             QuestionAnswerService.SetUserResponse(req.getSession().getAttribute("idTesting").toString(),id ,answer, req.getSession().getAttribute("login").toString());
         }
 
@@ -101,10 +93,7 @@ public class TestingController {
     }
 
     @RequestMapping(value = "/addFunds", method = RequestMethod.GET)
-    public @ResponseBody ModelAndView Funds(HttpServletRequest req) throws java.io.IOException {
-        ModelAndView model = new ModelAndView("addFunds");
-        return model;
-    }
+    public ModelAndView Funds(){return new ModelAndView("addFunds");}
 
     @RequestMapping(value = "/addFunds/add", method = RequestMethod.POST)
     public @ResponseBody String FundsPOST(HttpServletRequest req) throws java.io.IOException {
@@ -156,10 +145,6 @@ public class TestingController {
         model.addObject("questions",q);
         String idTesting = TestService.SetMultyTesting(req.getSession().getAttribute("login").toString());
         req.getSession().setAttribute("idTesting", idTesting);
-
         return model;
     }
-
-
-
 }

@@ -2,22 +2,17 @@ package ru.javastudy.mvcHtml5Angular.controller;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.javastudy.mvcHtml5Angular.service.TestService;
-import ru.javastudy.mvcHtml5Angular.service.proposeQuestionService;
-
+import ru.javastudy.mvcHtml5Angular.service.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @SessionAttributes(value = "userJSP")
 public class ProposeController {
+
     @RequestMapping(value = "/propose", method = RequestMethod.GET)
-    public @ResponseBody
-    ModelAndView propose1(HttpServletRequest req) throws java.io.IOException {
+    public ModelAndView propose1(){
         ModelAndView model =  new ModelAndView("propose");
         String tmp[] = TestService.GetTests(null);
 
@@ -33,7 +28,6 @@ public class ProposeController {
         JSONObject json = new JSONObject();
 
         for(int i=0; i< Integer.parseInt(req.getParameter("sizeAnswers").toString()); i++){
-            // System.out.println(req.getParameter("answers["+i+"][answer]").toString());
             proposeQuestionService.setProposeAnswer(idQ, req.getParameter("answers["+i+"][answer]").toString());
         }
 

@@ -11,32 +11,23 @@ public class QuestionAnswerService {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-            ResultSet myRs = myStmt.executeQuery("Select * from quizsystem.question where idquestion in " +
+            ResultSet myRs = myStmt.executeQuery("Select *, count(*) count from quizsystem.question where idQuestion in " +
                     "(SELECT idQuestion FROM quizsystem.`test-question` where idTest in " +
-                    "(select idtest from quizsystem.test where idCategory = " +
+                    "(select idTest from quizsystem.test where idCategory = " +
                     "(Select idСategory from quizsystem.сategory where name = '"+Category+"')))");
             //получили id всех вопросов причастных к этому тесту
-
             int i=0;
-            while(myRs.next()) i++;
-
-            String question[] = new String[i];
-
-            myRs = myStmt.executeQuery("Select * from quizsystem.question where idquestion in " +
-                    "(SELECT idQuestion FROM quizsystem.`test-question` where idTest in " +
-                    "(select idtest from quizsystem.test where idCategory = " +
-                    " (Select idСategory from quizsystem.сategory where name = '"+Category+"')))");
-            i=0;
-            while(myRs.next()){
-                question[i] = myRs.getString("questionContent");
-                i++;
+            if(myRs.next()) {
+                String question[] = new String[myRs.getInt("count")];
+                while (myRs.next()) {
+                    question[i] = myRs.getString("questionContent");
+                    i++;
+                }
+                return question;
             }
-            return question;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
-
         return null;
     }
 
@@ -68,7 +59,6 @@ public class QuestionAnswerService {
                 }
             }
             return question;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -76,7 +66,6 @@ public class QuestionAnswerService {
     }
 
     public static Question[] GetQuestions(String nameTest){
-
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
@@ -87,7 +76,6 @@ public class QuestionAnswerService {
                     + "(select idtest from quizsystem.test where name = '"+nameTest+"'))");
             else myRs= myStmt.executeQuery("Select * from quizsystem.question ");
             //получили id всех вопросов причастных к этому тесту
-
             int i=0;
             while(myRs.next()) i++;
 
@@ -99,17 +87,14 @@ public class QuestionAnswerService {
             else myRs= myStmt.executeQuery("Select * from quizsystem.question ");
             i=0;
             while(myRs.next()){
-                Question q = new Question(myRs.getString("questionContent"), myRs.getString("typeQuestion"), GetAnswers(myRs.getString("idquestion")), myRs.getString("idquestion"));
-
+                Question q = new Question(myRs.getString("content"), myRs.getString("typeQuestion"), GetAnswers(myRs.getString("idquestion")), myRs.getString("idquestion"));
                 question[i] = q;
                 i++;
             }
             return question;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
-
         return null;
     }
 
@@ -120,21 +105,17 @@ public class QuestionAnswerService {
             Statement myStmt = driver.connect();
             ResultSet myRs = myStmt.executeQuery("Select * from quizsystem.answer where idanswer in"
                     + "	(SELECT idAnswer FROM quizsystem.`question-answer` where idquestion = "+idQuestion+")");
-
             int i=0;
             while(myRs.next()) i++;
-
             String answers[] = new String[i];
-
             myRs = myStmt.executeQuery("Select * from quizsystem.answer where idanswer in"
                     + "	(SELECT idAnswer FROM quizsystem.`question-answer` where idquestion = "+idQuestion+")");
             i=0;
             while(myRs.next()){
-                answers[i] = myRs.getString("answerContent");
+                answers[i] = myRs.getString("content");
                 i++;
             }
             return answers;
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -142,12 +123,10 @@ public class QuestionAnswerService {
     }
 
     public static void SetUserResponse(String idTesting, String IdQuestion, String NameAnswer, String login){
-       //INSERT INTO `quizsystem`.`user_response` (`idUser`, `idTesting`, `idQuestion`, `idAnswer`, `correctness`) VALUES ('2', '1', '4', '4', '1');
-    //
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Statement myStmt = driver.connect();
-            ResultSet myRs = myStmt.executeQuery("Select * from quizsystem.answer where answerContent = '"+NameAnswer+"'");
+            ResultSet myRs = myStmt.executeQuery("Select * from quizsystem.answer where content = '"+NameAnswer+"'");
             if(myRs.next()) {
                 String idAnswer = myRs.getString("idanswer");
                 myStmt.executeUpdate("INSERT INTO `quizsystem`.`user_response` (`idUser`, `idTesting`, `idQuestion`, `idAnswer`, `correctness`)" +
@@ -155,12 +134,9 @@ public class QuestionAnswerService {
                         idTesting + "', '" + IdQuestion + "'," + idAnswer + ", " +
                         "(SELECT correctly FROM quizsystem.`question-answer` where idQuestion=" + IdQuestion + " and idAnswer = " + idAnswer + "));");
             }
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
     }
-
-
 }
 

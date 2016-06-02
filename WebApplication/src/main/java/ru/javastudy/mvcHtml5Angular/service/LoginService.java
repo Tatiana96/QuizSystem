@@ -13,21 +13,16 @@ public class LoginService {
             if(!myRs.next()) {///такой пользователь не найден
                 driver.unconnect();
                 return false;
-            }
-            else {
+            }else {
                 myRs = myStmt.executeQuery("SELECT * FROM QuizSystem.user where login = '" + login + "' and password = '"+password+"'");
                 if(!myRs.next()){
-                    System.out.println("password is incorrect");///вставить в страницу что пароль не верен
                     driver.unconnect();
                     return false;
-                }
-
-                else {
+                }else {
                     driver.unconnect();
                     return true;
                 }
             }
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -49,8 +44,6 @@ public class LoginService {
                 driver.unconnect();
                 return false;
             }
-
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
@@ -67,14 +60,10 @@ public class LoginService {
                 String bla = myRs.getString("isAdmin").toString();
                if( bla.equalsIgnoreCase("1"))return true;
                else return false;
-
             }
-
         }catch(Exception exc){
             exc.printStackTrace();
         }
         return false;
-
     }
-
 }

@@ -5,7 +5,6 @@
 
  if(admin!= null){%>
 <a href="AllQuestion" class="list-group-item">Просмотреть все вопросы</a>
-<a href="categories" class="list-group-item">Просмотреть все тесты</a>
 <a href="NewQuestion" class="list-group-item">Просмотреть новые вопросы</a>
 <a href="AllTransactions" class="list-group-item">Просмотреть поступившие средства</a>
 <%}%>

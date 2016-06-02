@@ -1,10 +1,7 @@
 package ru.javastudy.mvcHtml5Angular.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.javastudy.mvcHtml5Angular.service.*;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +26,6 @@ public class MainController {
     @RequestMapping(value = "/AllStatistica", method = RequestMethod.GET)
     public ModelAndView AllStatictica() {
         ModelAndView model =  new ModelAndView("AllStatistica");
-
         model.addObject("TotalCategories", StatisticaService.Count("сategory"));
         model.addObject("TotalTests", StatisticaService.Count("test"));
         model.addObject("TotalUsers", StatisticaService.Count("user"));

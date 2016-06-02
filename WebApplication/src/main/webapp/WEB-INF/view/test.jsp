@@ -49,31 +49,17 @@
 					<div class="col-md-5 txt">Описание теста:</div>
 					<div class="col-md-7">${about}</div>
 				</div>
-				<div class="row param">
-					<div class="col-md-5 txt">Cтатистика:</div>
-					<div class="col-md-7">
-						<table>
-						  <tr>
-						    <td>Всего прошли</td>
-						    <td>${total}</td>
-						  </tr>
-						  <tr>
-						    <td>Успешно прошли</td>
-						    <td>${best}</td>
-						  </tr>
-						</table>
-					</div>
-				</div>
 
-			<input type="button" onclick="GenerKod()" value="Получить код теста"><br>
+			<input type="button" onclick="GenerKod()" value="Получить код теста" style="margin-top: 5px; margin-bottom: 5px;"><br>
 			<div id="Msg"></div>
 
 			<% if(login!=null){
 				Integer costUser = Integer.parseInt((String)balance);
 				Integer costTest = Integer.parseInt((String)session.getAttribute("costTest"));
 				if (costUser >= costTest) {%>
-					<a href="/solve?nameTest=${nameTest}">Пройти</a><br>
-					<div id="comment">
+
+					<input type="button" onclick="SolveTest()" value="Пройти тест" style="margin-top: 5px; margin-bottom: 5px;"><br>
+					<div id="comment" style="    margin-top: 80px;">
 						<form>
 							Введите свой комментарий: <input type="text" id="com">
 							<input type="button" onclick="Add()" id="add" value="Добавить"><br>
@@ -105,7 +91,7 @@
 						type: "POST",
 						url: "http://localhost:8080/CommentAdd",
 						data: {
-							content: $("#comm").val(),
+							content: $("#com").val(),
 							test: test
 						},
 						dataType: "json",
@@ -114,6 +100,10 @@
 						}
 					});
 					return false;
+				}
+
+				function SolveTest(){
+					document.location.href = "http://localhost:8080/solve?nameTest=${nameTest}";
 				}
 
 				function GenerKod(){

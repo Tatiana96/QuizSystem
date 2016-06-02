@@ -240,9 +240,6 @@
             </plugin>
         </plugins>
 
-        <!--need to find configs in tests in package web-inf like
-        @ContextConfiguration(locations = {"classpath:/config/application-context.xml"
-        -->
         <testResources>
             <testResource>
                 <directory>src/main/webapp/WEB-INF/config</directory>

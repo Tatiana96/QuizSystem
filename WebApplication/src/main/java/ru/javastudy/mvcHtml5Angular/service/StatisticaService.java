@@ -5,7 +5,6 @@ import java.sql.Statement;
 
 public class StatisticaService {
 
-
     public static String Count(String parameter){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -20,7 +19,4 @@ public class StatisticaService {
         }
         return null;
     }
-    public static String CountUsers(){return null;}
-    public static String CountCategories(){return null;}
-
 }

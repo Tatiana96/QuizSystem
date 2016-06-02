@@ -2,13 +2,9 @@ package ru.javastudy.mvcHtml5Angular.controller;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.javastudy.mvcHtml5Angular.service.LoginService;
-import ru.javastudy.mvcHtml5Angular.service.UserService;
+import ru.javastudy.mvcHtml5Angular.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,15 +29,11 @@ public class LoginAuthController {
     public @ResponseBody String LoginChek(HttpServletRequest req){
         try {
             JSONObject json = new JSONObject();
-
             if (LoginService.login(req.getParameter("login"), req.getParameter("password"))) {
                 if(LoginService.IsAdmin(req.getParameter("login"))) req.getSession().setAttribute("admin", "true");
-
                 //в регистрации не делаем проверку на админа
                 req.getSession().setAttribute("login", req.getParameter("login"));
-
                 req.getSession().setAttribute("balance", UserService.GetAboutUser(req.getSession().getAttribute("login").toString(), "balance"));
-
                 json.put("flag", true);
             } else {
                 json.put("flag", false);
@@ -57,7 +49,6 @@ public class LoginAuthController {
     public @ResponseBody String AuthChek(HttpServletRequest req){
         try {
             JSONObject json = new JSONObject();
-
             if (LoginService.singup(req.getParameter("login"), req.getParameter("password"),req.getParameter("firstname"),req.getParameter("secondname"),req.getParameter("Email"))) {
                 req.getSession().setAttribute("login", req.getParameter("login"));
 
